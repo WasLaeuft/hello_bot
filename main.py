@@ -10,7 +10,7 @@ access_token = 'EAAZALe3ScA2UBAD4mQAKG8MRlIvZBu2ESqKzk2ypZBUCaVHfAjrbArxCK3c2QAM
 
 @app.route("/", methods=["GET"])
 def root():
-    return "Hello World!"
+    return "Hello World! is this workin"
 
 
 # webhook for facebook to initialize the bot
