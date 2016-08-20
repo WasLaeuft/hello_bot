@@ -112,3 +112,6 @@ def create_generic_template_element(title, image_url, subtitle):
         "image_url": image_url,
         "subtitle": subtitle
     }
+
+if __name__ == '__main__':
+    app.run(debug=True)
