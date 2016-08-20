@@ -5,8 +5,7 @@ import requests
 
 app = Flask(__name__)
 
-
-access_token = 'EAAZALe3ScA2UBAEZBE2mqisaLv4N34rpAnG8J4jYa5LZClZAdWH0NU1SoiZAWmXureJRGh91EH0ZCUL58oQbgzZAX5yly406XCKG4ezQxrRWPU3D47zFYmDcgfbXyXKP6genDz0IhvMyIQhaOfUPJA2gV2CTp0afaBYxbq2AZBDSzwZDZD'
+access_token = 'EAAZALe3ScA2UBAD4mQAKG8MRlIvZBu2ESqKzk2ypZBUCaVHfAjrbArxCK3c2QAME8tAXW67UfZAAZBZA3EZB70xaCKQldVZC1biqRbwtakiVxv5AIfW4N6GeCROkZC33r8yEV2y5y21f5CqlBtXcGmC6boNr3mkUcxUSZBs7OuZAIEdsgZDZD'
 
 
 @app.route("/", methods=["GET"])
@@ -47,11 +46,8 @@ def post_webhook():
     return "ok", 200
 
 
-
-# helper functions
-
 def get_url(url):
-    result = requests.get(url)
+    result = request.get(url)
     return json.loads(result.content)
 
 
@@ -66,7 +62,6 @@ def do_rules(recipient_id, message_text):
 
     else:
         reply_with_text(recipient_id, "You have to write something I understand ;)")
-
 
 
 def reply_with_text(recipient_id, message_text):
@@ -87,7 +82,6 @@ def reply_with_generic_template(recipient_id, elements):
         }
     }
     reply_to_facebook(recipient_id, message)
-
 
 
 def reply_to_facebook(recipient_id, message):
@@ -112,10 +106,12 @@ def reply_to_facebook(recipient_id, message):
     r = requests.post(url=url, headers=headers, data=data)
 
 
-
 def create_generic_template_element(title, image_url, subtitle):
     return {
         "title": title,
         "image_url": image_url,
         "subtitle": subtitle
     }
+
+if __name__ == '__main__':
+    app.run(debug=True)
