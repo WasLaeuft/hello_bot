@@ -8,9 +8,12 @@ app = Flask(__name__)
 access_token = 'EAAZALe3ScA2UBAD4mQAKG8MRlIvZBu2ESqKzk2ypZBUCaVHfAjrbArxCK3c2QAME8tAXW67UfZAAZBZA3EZB70xaCKQldVZC1biqRbwtakiVxv5AIfW4N6GeCROkZC33r8yEV2y5y21f5CqlBtXcGmC6boNr3mkUcxUSZBs7OuZAIEdsgZDZD'
 
 
+
+
+
 @app.route("/", methods=["GET"])
 def root():
-    return "Hello World! is this workin"
+    return "Hello World!"
 
 
 # webhook for facebook to initialize the bot
@@ -46,8 +49,10 @@ def post_webhook():
     return "ok", 200
 
 
+# helper functions
+
 def get_url(url):
-    result = request.get(url)
+    result = requests.get(url)
     return json.loads(result.content)
 
 
@@ -63,6 +68,8 @@ def do_rules(recipient_id, message_text):
     else:
         reply_with_text(recipient_id, "You have to write something I understand ;)")
 
+
+# reply methods
 
 def reply_with_text(recipient_id, message_text):
     message = {
@@ -83,6 +90,21 @@ def reply_with_generic_template(recipient_id, elements):
     }
     reply_to_facebook(recipient_id, message)
 
+
+def reply_with_image(recipient_id, image_url):
+    message = {
+        "attachment": {
+            "type": "image",
+            "payload": {
+                "template_type": "image",
+                "url": image_url
+            }
+        }
+    }
+    reply_to_facebook(recipient_id, message)
+
+
+# function to send a message to facebook
 
 def reply_to_facebook(recipient_id, message):
     params = {
@@ -106,12 +128,15 @@ def reply_to_facebook(recipient_id, message):
     r = requests.post(url=url, headers=headers, data=data)
 
 
+# create template elements for carousel, images with buttons, quick replies, …
+
 def create_generic_template_element(title, image_url, subtitle):
     return {
         "title": title,
         "image_url": image_url,
         "subtitle": subtitle
     }
+
 
 if __name__ == '__main__':
     app.run(debug=True)
